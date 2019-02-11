@@ -49,7 +49,6 @@ const unMutedCurrentTab = () => new Promise(async r => {
       windowId: windowInfo.id,
       active: true
     }, tabInfo => {
-      console.log(tabInfo)
       const id = tabInfo[0] && tabInfo[0].id
       const params = [{ muted: false }, info => r(info)]
       if (id) params.unshift(id)
@@ -67,6 +66,15 @@ const listener = async ({tabId}) => {
   const info = await new Promise(r => {
     chrome.tabs.update(tabId, { muted: false }, tab => r(tab))
   })
+}
+
+const windowListener = async (windowId) => {
+  const tabInfos = await new Promise(r => {
+    chrome.tabs.query({active: true, lastFocusedWindow: true}, tab => r(tab))
+  })
+  if (tabInfos && tabInfos[0]) {
+    await listener(tabInfos[0])
+  }
 }
 
 /**
@@ -90,20 +98,20 @@ const regainInitializationAudioSettings = () => new Promise(async r => {
  * Initialize event handler
  */
 const initHandler = async () => {
-  chrome.runtime.onMessage.addListener( async ({event}, ...rest) => {
-    console.info(event, rest)
-
+  chrome.runtime.onMessage.addListener( async ({event}) => {
     switch (event) {
       case 'start':
         await saveInitTabInfo()
         await mutedAllTabs()
         chrome.tabs.update({ muted: false })
         await unMutedCurrentTab()
+        chrome.windows.onFocusChanged.addListener(windowListener)
         chrome.tabs.onActivated.addListener(listener)
         return
       case 'end' :
         await regainInitializationAudioSettings();
         chrome.tabs.onActivated.removeListener(listener)
+        chrome.windows.onFocusChanged.removeListener(windowListener)
         return
       default :
         return
