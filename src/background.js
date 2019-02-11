@@ -67,7 +67,10 @@ const listener = async ({tabId}) => {
     chrome.tabs.update(tabId, { muted: false }, tab => r(tab))
   })
 }
-
+/**
+ * handler for window focus change event.
+ * @param {*} windowId 
+ */
 const windowListener = async (windowId) => {
   const tabInfos = await new Promise(r => {
     chrome.tabs.query({active: true, lastFocusedWindow: true}, tab => r(tab))
