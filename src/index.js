@@ -1,5 +1,15 @@
-const btn1 = document.getElementById('btn1')
-const btn2 = document.getElementById('btn2')
+const switchBtn = document.getElementById('switch')
+const labelText = document.getElementById('labelText')
 
-btn1.onclick = () => chrome.runtime.sendMessage({ event: 'start' })
-btn2.onclick = () => chrome.runtime.sendMessage({ event: 'end' })
+switchBtn.onclick = e => {
+  if (!this.toggle) {
+    this.toggle = true
+    labelText.innerText = '/on'
+    chrome.runtime.sendMessage({ event: 'start' })
+  } else {
+    this.toggle = false
+    labelText.innerText = '/off'
+    chrome.runtime.sendMessage({ event: 'end' })
+  }
+}
+
