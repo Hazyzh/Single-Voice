@@ -7,3 +7,4 @@
 
 * fix unmuted handler issues.
 * optimize control page ui & ux.
+* make an extension logo and deault icon.
