@@ -1,4 +1,5 @@
 const mutedInfoMap = new Map()
+let GLOBAL_OPEN_FLAG = false;
 
 /**
  * Get all tabs id and mute info and saved in mutedInfoMap map.
@@ -104,6 +105,10 @@ const initHandler = async () => {
   chrome.runtime.onMessage.addListener( async ({event}) => {
     switch (event) {
       case 'start':
+        // defense duplicate
+        if (GLOBAL_OPEN_FLAG) return
+        GLOBAL_OPEN_FLAG = true
+
         await saveInitTabInfo()
         await mutedAllTabs()
         chrome.tabs.update({ muted: false })
@@ -112,6 +117,7 @@ const initHandler = async () => {
         chrome.tabs.onActivated.addListener(listener)
         return
       case 'end' :
+        GLOBAL_OPEN_FLAG = false
         await regainInitializationAudioSettings();
         chrome.tabs.onActivated.removeListener(listener)
         chrome.windows.onFocusChanged.removeListener(windowListener)
