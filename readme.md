@@ -5,7 +5,7 @@
 
 ### About this extension
 
-![**Single Voice**](https://chrome.google.com/webstore/detail/single-voice/cdjkbfcchmaoinbcoilgppbefpdaegnn/related)
+[**Single Voice**](https://chrome.google.com/webstore/detail/single-voice/cdjkbfcchmaoinbcoilgppbefpdaegnn/related)
 
 ### Todo lists
 
