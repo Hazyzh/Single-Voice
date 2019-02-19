@@ -128,12 +128,9 @@ const initHandler = async () => {
   })
 }
 
-
-chrome.runtime.onInstalled.addListener(
-  async function() {
-    initHandler();
-  }
-)
+// tigger the init handler directly
+// do not register listeners asynchronously, as they will not be properly triggered.
+initHandler();
 
 
 
