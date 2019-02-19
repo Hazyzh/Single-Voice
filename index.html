@@ -70,12 +70,35 @@
     body {
       width: 100px;
     }
+
+    .line { 
+      display: block;
+      width: 80%;
+      margin: 5px auto;
+      overflow: hidden;
+      border-bottom: 1px solid #eee;
+    }
+
+    .footer {
+      font-size: 0.4em;
+      text-align: center;
+    }
+    a {
+      text-decoration: none;
+      color: #7FC6A6;
+    }
   </style>
 </head>
 <body>
   <h4>MODE <span id="labelText">/off</span></h4>
   <div class="box">
     <input type="checkbox" id="switch" /><label for="switch">Toggle</label>
+  </div>
+  <div class="line"></div>
+  <div class="footer">
+    <span><a href="https://github.com/Hazyzh/Single-Voice">About</a></span>
+    |
+    <span><a href="https://github.com/Hazyzh/Single-Voice/issues">Feedback</a></span>
   </div>
   <script src="src/index.js"></script>
 </body>
